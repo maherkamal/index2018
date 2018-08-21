@@ -49,9 +49,8 @@ podTemplate(
             }
         }
         stage ('Deploy') {
-            container ('helm') {
-                sh "/helm init --client-only --skip-refresh"
-                sh "/helm upgrade --install --wait --set image.repository=${repository},image.tag=${commitId} hello hello"
+             container ('docker') {
+                sh "docker run -p 4001:8080 ${repository}:${commitId}"
             }
         }
     }
